@@ -1,17 +1,19 @@
 public abstract class Observer {
     protected Subject subject;
+    private boolean active = true; // Initially, all observers are active
+
     public abstract void update();
 
-    public static class HexaObserver extends Observer{
+    public boolean isActive() {
+        return active;
+    }
 
-        public HexaObserver(Subject subject){
-            this.subject = subject;
-            this.subject.attach(this);
-        }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-        @Override
-        public void update() {
-            System.out.println( "Hex String: " + Integer.toHexString( subject.getState() ).toUpperCase() );
-        }
+    public void detach(Subject subject)
+    {
+        subject.detach(this);
     }
 }

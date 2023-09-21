@@ -9,6 +9,9 @@ public class Subject {
     public int getState() {
         return state;
     }
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
 
     public void setState(int state) {
         this.state = state;
@@ -19,11 +22,14 @@ public class Subject {
         observers.add(observer);
     }
 
-    public void notifyAllObservers(){
-        for (Observer observer : observers) {
-            observer.update();
+    public void notifyAllObservers() {
+        for (Observer observer : new ArrayList<>(observers)) {
+            if (observer.isActive()) {
+                observer.update();
+            }
         }
     }
+
 
     public static class BinaryObserver extends Observer{
 
